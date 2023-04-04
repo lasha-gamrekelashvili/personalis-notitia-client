@@ -1,0 +1,19 @@
+<body>
+    <div class="header">
+        <h1 class="header-title">Lasha Gamrekelashvili - Personal Notitia</h1>
+    </div>
+
+    <div class="chatbot-container">
+        <div class="chatbot-input-container">
+            <form (submit)="onFormSubmit($event)">
+                <div class="input-container">
+                    <input type="text" [(ngModel)]="userInput" name="userInput" placeholder="Type a question...">
+                    <i class="fas fa-paper-plane" (click)="onFormSubmit($event)"></i>
+                </div>
+            </form>
+        </div>
+        <div class="chatbot-output-container">
+            {{chatbotOutput}}
+        </div>
+    </div>
+</body>
