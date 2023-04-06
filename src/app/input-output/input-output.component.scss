@@ -1,9 +1,9 @@
 .header {
     height: 60px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #ddd;
+    margin-inline: 10px;
 }
 
 .header-title {
@@ -11,6 +11,51 @@
     font-size: 30px;
     margin: 0;
     text-transform: uppercase;
+}
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Mono', monospace;
+    background-color: #fff;
+    color: #000;
+    transition: background-color 0.5s ease;
+}
+
+body.dark-mode {
+    background-color: #222;
+    color: #fff;
+}
+
+.dark-mode-button {
+    background-color: #f2f2f2;
+    color: rgb(65, 65, 65);
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-family: 'Roboto Mono', monospace;
+    padding: 5px 10px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border-radius: 0.4rem;
+    transition: background-color 0.3s ease;
+    margin-left: 0.5rem;
+
+    &:hover {
+        background-color: #000;
+        color: #fff;
+
+        .fas.fa-moon {
+            color: rgb(255, 255, 255);
+        }
+
+        .fas.fa-sun {
+            color: rgb(255, 255, 255);
+        }
+    }
 }
 
 .chatbot-container {
@@ -21,10 +66,6 @@
     height: calc(100vh - 80px);
 }
 
-.chatbot-title {
-    font-size: 36px;
-    margin-bottom: 20px;
-}
 
 .chatbot-input-container {
     margin-bottom: 20px;
@@ -36,9 +77,14 @@
     align-items: center;
     background-color: white;
     border-radius: 5px;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(232, 232, 232, 0.5);
     overflow: hidden;
+    transition: background-color 0.3s ease;
 
+    &:hover {
+        background-color: #ececec;
+
+    }
 }
 
 input[type="text"] {
@@ -52,18 +98,35 @@ input[type="text"] {
 
 input[type="text"]:focus {
     outline: none;
-    box-shadow: 0 0 5px #66afe9;
 }
 
-i.fas {
-    font-size: 20px;
+.chat-history {
     color: #000;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    font-size: 14px;
+
+}
+
+.user-input {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+
+i.fas {
+    font-size: 15px;
+    color: rgb(55, 55, 55);
     padding: 10px;
     cursor: pointer;
 }
 
-body {
-    font-family: 'Roboto Mono', monospace;
+.chatbot-output {
+    background-color: #e5e5e5;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .chatbot-output-container {
@@ -72,7 +135,115 @@ body {
     border-radius: 5px;
     border: 1px solid #ddd;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
-    width: 400px;
+    width: 550px;
     font-size: 16px;
+    max-height: 650px;
     font-family: 'Roboto Mono', monospace;
+    overflow-y: auto;
+
 }
+
+.clear-button-container {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.clear-button {
+    background-color: #f2f2f2;
+    border: none;
+    color: rgb(65, 65, 65);
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    font-family: 'Roboto Mono', monospace;
+    padding: 5px 10px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border-radius: 0.4rem;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: #d5d5d5;
+    }
+}
+
+@media (max-width: 576px) {
+    .header {
+      height: auto;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+  
+    .header-title {
+      margin-bottom: 10px;
+    }
+  
+    .dark-mode-button {
+      margin-top: 10px;
+      margin-left: 0;
+    }
+  
+    .chatbot-output-container {
+      width: 100%;
+      max-height: none;
+    }
+  
+    .clear-button-container {
+      margin-top: 1rem;
+    }
+  }
+  
+  // Tablet Styles
+  @media (min-width: 576px) and (max-width: 768px) {
+    .header {
+      height: auto;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+  
+    .header-title {
+      margin-bottom: 10px;
+    }
+  
+    .dark-mode-button {
+      margin-top: 10px;
+      margin-left: 0;
+    }
+  
+    .chatbot-output-container {
+      width: 100%;
+      max-height: none;
+    }
+  
+    .clear-button-container {
+      margin-top: 1rem;
+    }
+  }
+  
+  // Desktop Styles
+  @media (min-width: 768px) {
+    .header {
+      height: 60px;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-inline: 10px;
+    }
+  
+    .header-title {
+      margin: 0;
+    }
+  
+    .dark-mode-button {
+      margin-top: 0;
+      margin-left: 0.5rem;
+    }
+  
+    .chatbot-container {
+      height: calc(100vh - 80px);
+    }
+  }

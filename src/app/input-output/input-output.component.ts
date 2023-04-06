@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import axios from 'axios';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-input-output',
@@ -7,26 +6,46 @@ import axios from 'axios';
   styleUrls: ['./input-output.component.scss']
 })
 export class InputOutputComponent {
+  @ViewChild('chatHistoryContainer') private chatHistoryContainer!: ElementRef;
+
+  isDarkMode = false;
   userInput = '';
   chatbotOutput = '';
+  chatHistory: { userInput: string, chatbotOutput: string }[] = [];
 
   onFormSubmit(event: any) {
     event.preventDefault();
     this.chatbotOutput = '';
-    setTimeout(()=>{
-      if (this.userInput.trim() !== '') {
-        const dummyResponse = dummyResponses[Math.floor(Math.random() * dummyResponses.length)];
-        this.chatbotOutput = `You said "${this.userInput}", but I am just a dummy response!\n\n${dummyResponse}`;
-      }
-  
+    if (this.userInput.trim() !== '') {
+      const dummyResponse = dummyResponses[Math.floor(Math.random() * dummyResponses.length)];
+      // this.chatbotOutput = `You said "${this.userInput}", but I am just a dummy response!\n\n${dummyResponse}`;
+      this.chatbotOutput = dummyResponse;
+      this.chatHistory.push({ userInput: this.userInput, chatbotOutput: this.chatbotOutput });
       this.userInput = '';
-    },100)
+      this.chatbotOutput = '';
+      setTimeout(() => {
+        this.scrollToBottom();
+      });
+    }
   }
 
-  onInputChange(event: any) {
-    this.userInput = event.target.value;
+  scrollToBottom(): void {
+    try {
+      this.chatHistoryContainer.nativeElement.scrollTop = this.chatHistoryContainer.nativeElement.scrollHeight;
+    } catch (err) { }
+  }
+
+  onClear(): void {
+    this.chatHistory = [];
+  }
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    document.body.classList.toggle('dark-mode');
   }
 }
+
+
 
 const dummyResponses = [
   "Sorry, I didn't understand that.",

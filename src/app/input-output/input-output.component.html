@@ -1,6 +1,10 @@
-<body>
+<body [ngClass]="{'dark-mode': isDarkMode}">
     <div class="header">
-        <h1 class="header-title">Lasha Gamrekelashvili - Personal Notitia</h1>
+        <h1 class="header-title">Lasha Gamrekelashvili - Personalis Notitia</h1>
+        <button class="dark-mode-button" (click)="toggleDarkMode()">
+            <i class="fas fa-{{ isDarkMode ? 'sun' : 'moon' }}"></i>
+            <span>{{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}</span>
+        </button>
     </div>
 
     <div class="chatbot-container">
@@ -12,8 +16,14 @@
                 </div>
             </form>
         </div>
-        <div class="chatbot-output-container">
-            {{chatbotOutput}}
+        <div class="chatbot-output-container" #chatHistoryContainer>
+            <div *ngFor="let chat of chatHistory" class="chat-history">
+                <div class="user-input">{{ chat.userInput }}</div>
+                <div class="chatbot-output">{{ chat.chatbotOutput }}</div>
+            </div>
+        </div>
+        <div class="clear-button-container">
+            <button class="clear-button" (click)="onClear()">Clear</button>
         </div>
     </div>
 </body>
