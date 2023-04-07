@@ -12,6 +12,7 @@ export class InputOutputComponent {
   isDarkMode = false;
   userInput = '';
   chatbotOutput = '';
+  isGenerating = false;
   chatHistory: { userInput: string, chatbotOutput: string }[] = [];
 
 
@@ -21,16 +22,42 @@ export class InputOutputComponent {
     if (this.userInput.trim() !== '') {
       axios.post('https://localhost:44390/api/dialog')
         .then((response) => {
-          this.chatHistory.push({ userInput: this.userInput, chatbotOutput: response.data });
-          this.userInput = '';
-          this.chatbotOutput = '';
-        })
+          const responseArr = response.data.split('');
+          let chatbotOutput = '';
+          
+          this.chatHistory.push({ userInput: this.userInput, chatbotOutput: chatbotOutput || '' });
 
-      setTimeout(() => {
-        this.scrollToBottom();
-      });
+          this.userInput = '';
+
+          if (this.chatHistory.length > 0) {
+            const lastChat = this.chatHistory[this.chatHistory.length - 1];
+            chatbotOutput = lastChat.chatbotOutput + chatbotOutput;
+          }
+          
+          
+          for (let i = 0; i < responseArr.length; i++) {
+            this.isGenerating = true;
+            setTimeout(() => {
+              chatbotOutput += responseArr[i];
+              const lastChat = this.chatHistory[this.chatHistory.length - 1];
+              lastChat.chatbotOutput = chatbotOutput;
+            }, 25 * i);
+          }
+  
+          setTimeout(() => {
+            this.isGenerating = false;
+          }, 25 * responseArr.length);
+        });
+  
+        setTimeout(() => {
+          this.scrollToBottom();
+          setTimeout(() => {
+            this.scrollToBottom();
+          }, 25);
+        });
     }
   }
+  
 
   scrollToBottom(): void {
     this.chatHistoryContainer.nativeElement.scrollTop = this.chatHistoryContainer.nativeElement.scrollHeight;

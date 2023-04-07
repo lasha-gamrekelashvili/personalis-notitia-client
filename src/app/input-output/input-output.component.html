@@ -11,9 +11,14 @@
         <div class="chatbot-input-container">
             <form (submit)="onFormSubmit($event)">
                 <div class="input-container">
-                    <input type="text" [(ngModel)]="userInput" name="userInput" placeholder="Type a question...">
-                    <i class="fas fa-paper-plane" (click)="onFormSubmit($event)"></i>
-                </div>
+                    <input type="text" [(ngModel)]="userInput" name="userInput" placeholder="Type a question..." [disabled]="isGenerating">
+                    <ng-container *ngIf="!isGenerating; else generatingIcon">
+                      <i class="fas fa-paper-plane" (click)="onFormSubmit($event)"></i>
+                    </ng-container>
+                    <ng-template #generatingIcon>
+                      <i class="fas fa-circle-notch fa-spin"></i>
+                    </ng-template>
+                  </div>
             </form>
         </div>
         <div class="chatbot-output-container" #chatHistoryContainer>
