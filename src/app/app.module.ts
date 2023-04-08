@@ -4,14 +4,14 @@ import { NgxTypedJsModule } from 'ngx-typed-js';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { InputOutputComponent } from './input-output/input-output.component';
+import { DialogComponent } from './dialog/dialog.component';
 import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    InputOutputComponent
+    DialogComponent
   ],
   imports: [
     BrowserModule,

@@ -2,11 +2,11 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import axios from 'axios';
 
 @Component({
-  selector: 'app-input-output',
-  templateUrl: './input-output.component.html',
-  styleUrls: ['./input-output.component.scss']
+  selector: 'app-dialog',
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.scss']
 })
-export class InputOutputComponent {
+export class DialogComponent {
   @ViewChild('chatHistoryContainer') private chatHistoryContainer!: ElementRef;
 
   isDarkMode = false;
@@ -24,6 +24,7 @@ export class InputOutputComponent {
     event.preventDefault();
     
     if (this.userInput.trim() !== '') {
+      this.isGenerating = true;
       axios.post('https://localhost:44390/api/dialog', { message: this.userInput })
         .then((response) => {
           const responseArr = response.data.split('');
@@ -38,9 +39,7 @@ export class InputOutputComponent {
             chatbotOutput = lastChat.chatbotOutput + chatbotOutput;
           }
           
-          
           for (let i = 0; i < responseArr.length; i++) {
-            this.isGenerating = true;
             setTimeout(() => {
               chatbotOutput += responseArr[i];
               const lastChat = this.chatHistory[this.chatHistory.length - 1];
@@ -57,7 +56,7 @@ export class InputOutputComponent {
           this.scrollToBottom();
           setTimeout(() => {
             this.scrollToBottom();
-          }, 25);
+          }, 200);
         });
     }
   }
