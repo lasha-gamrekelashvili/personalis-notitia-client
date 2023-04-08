@@ -13,14 +13,18 @@ export class InputOutputComponent {
   userInput = '';
   chatbotOutput = '';
   isGenerating = false;
+
   chatHistory: { userInput: string, chatbotOutput: string }[] = [];
 
+  template1 = 'Brief summary of proffesional experience';
+  template2 = 'What is your salary expectation?';
+  template3 = 'Where did you study?';
 
   onFormSubmit(event: any) {
     event.preventDefault();
     
     if (this.userInput.trim() !== '') {
-      axios.post('https://localhost:44390/api/dialog')
+      axios.post('https://localhost:44390/api/dialog', { message: this.userInput })
         .then((response) => {
           const responseArr = response.data.split('');
           let chatbotOutput = '';
@@ -58,6 +62,12 @@ export class InputOutputComponent {
     }
   }
   
+  onTemplateClick(value: string) {
+    this.userInput = value;
+
+    const fakeEvent = { preventDefault: () => {} };
+    this.onFormSubmit(fakeEvent);
+  }
 
   scrollToBottom(): void {
     this.chatHistoryContainer.nativeElement.scrollTop = this.chatHistoryContainer.nativeElement.scrollHeight;
@@ -66,6 +76,7 @@ export class InputOutputComponent {
   onClear(): void {
     this.chatHistory = [];
   }
+  
 
   toggleDarkMode() {
     this.isDarkMode = !this.isDarkMode;

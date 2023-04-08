@@ -8,6 +8,12 @@
     </div>
 
     <div class="chatbot-container">
+        <div class="template-container">
+            <button class="template" (click)="onTemplateClick(template1)" [disabled]="isGenerating">{{template1}}</button>
+            <button class="template" (click)="onTemplateClick(template2)" [disabled]="isGenerating">{{template2}}</button>
+            <button class="template" (click)="onTemplateClick(template3)" [disabled]="isGenerating">{{template3}}</button>
+        </div>
+
         <div class="chatbot-input-container">
             <form (submit)="onFormSubmit($event)">
                 <div class="input-container">
