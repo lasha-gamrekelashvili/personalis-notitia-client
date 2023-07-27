@@ -1,0 +1,11 @@
+<body [ngClass]="{'dark-mode': isDarkMode}">
+  <div class="centered-container">
+    <div class="dialog-container">
+      <div *ngFor="let dialog of dialogs" class="dialog-item">
+        <div class="dialog-timestamp">{{ dialog.createdDate }}</div>
+        <div class="dialog-message">{{ dialog.message }}</div>
+        <div class="dialog-response">{{ dialog.response }}</div>
+      </div>
+    </div>
+  </div>
+</body>

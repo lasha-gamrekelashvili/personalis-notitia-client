@@ -1,40 +1,26 @@
 <body [ngClass]="{'dark-mode': isDarkMode}">
     <div class="header">
         <h1 class="header-title">Lasha Gamrekelashvili - Personalis Notitia</h1>
+        <button class="history-mode-button" (click)="toggleHistoryMode()">
+            <i class="fas fa-{{ showHistory ? 'comment' : 'clock' }}"></i>
+            <span>{{ showHistory ? 'Show Dialog' : 'Show History' }}</span>
+        </button>
+
         <button class="dark-mode-button" (click)="toggleDarkMode()">
             <i class="fas fa-{{ isDarkMode ? 'sun' : 'moon' }}"></i>
             <span>{{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}</span>
         </button>
     </div>
 
-    <div class="chatbot-container">
-        <div class="template-container">
-            <button class="template" (click)="onTemplateClick(template1)" [disabled]="isGenerating">{{template1}}</button>
-            <button class="template" (click)="onTemplateClick(template2)" [disabled]="isGenerating">{{template2}}</button>
-            <button class="template" (click)="onTemplateClick(template3)" [disabled]="isGenerating">{{template3}}</button>
-        </div>
+    <div class="fade-in-out">
+        <ng-container *ngIf="!showHistory">
+            <app-dialog-conversation></app-dialog-conversation>
+        </ng-container>
 
-        <div class="chatbot-input-container">
-            <form (submit)="onFormSubmit($event)">
-                <div class="input-container">
-                    <input type="text" [(ngModel)]="userInput" name="userInput" placeholder="Type a question..." [disabled]="isGenerating">
-                    <ng-container *ngIf="!isGenerating; else generatingIcon">
-                      <i class="fas fa-paper-plane" (click)="onFormSubmit($event)"></i>
-                    </ng-container>
-                    <ng-template #generatingIcon>
-                      <i class="fas fa-circle-notch fa-spin"></i>
-                    </ng-template>
-                  </div>
-            </form>
-        </div>
-        <div class="chatbot-output-container" #chatHistoryContainer>
-            <div *ngFor="let chat of chatHistory" class="chat-history">
-                <div class="user-input">{{ chat.userInput }}</div>
-                <div class="chatbot-output">{{ chat.chatbotOutput }}</div>
+        <ng-container *ngIf="showHistory">
+            <div class="history-container">
+                <app-dialog-history></app-dialog-history>
             </div>
-        </div>
-        <div class="clear-button-container">
-            <button class="clear-button" (click)="onClear()">Clear</button>
-        </div>
+        </ng-container>
     </div>
 </body>

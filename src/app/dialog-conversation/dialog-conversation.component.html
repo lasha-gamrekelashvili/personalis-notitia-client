@@ -1,0 +1,30 @@
+<div class="chatbot-container">
+    <div class="template-container">
+        <button class="template" (click)="onTemplateClick(template1)" [disabled]="isGenerating">{{template1}}</button>
+        <button class="template" (click)="onTemplateClick(template2)" [disabled]="isGenerating">{{template2}}</button>
+        <button class="template" (click)="onTemplateClick(template3)" [disabled]="isGenerating">{{template3}}</button>
+    </div>
+
+    <div class="chatbot-input-container">
+        <form (submit)="onFormSubmit($event)">
+            <div class="input-container">
+                <input type="text" [(ngModel)]="userInput" name="userInput" placeholder="Type a question..." [disabled]="isGenerating">
+                <ng-container *ngIf="!isGenerating; else generatingIcon">
+                  <i class="fas fa-paper-plane" (click)="onFormSubmit($event)"></i>
+                </ng-container>
+                <ng-template #generatingIcon>
+                  <i class="fas fa-circle-notch fa-spin"></i>
+                </ng-template>
+              </div>
+        </form>
+    </div>
+    <div class="chatbot-output-container" #chatHistoryContainer>
+        <div *ngFor="let chat of chatHistory" class="chat-history">
+            <div class="user-input">{{ chat.userInput }}</div>
+            <div class="chatbot-output">{{ chat.chatbotOutput }}</div>
+        </div>
+    </div>
+    <div class="clear-button-container">
+        <button class="clear-button" (click)="onClear()">Clear</button>
+    </div>
+</div>
